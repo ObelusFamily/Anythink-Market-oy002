@@ -18,7 +18,7 @@ for (let i = 0; i < 100; i++) {
     user.setPassword('password');
     users.push(user);
 }
-User.collection.insert(users);
+const usersPromise = User.collection.insert(users);
 
 const items = [];
 for (let i = 0; i < 100; i++) {
@@ -31,7 +31,7 @@ for (let i = 0; i < 100; i++) {
     item.seller = users[i];
     items.push(item);
 }
-Item.collection.insert(items);
+const itemsPromise = Item.collection.insert(items);
 
 const comments = [];
 for (let i = 0; i < 100; i++) {
@@ -42,4 +42,8 @@ for (let i = 0; i < 100; i++) {
     comment.item = items[i];
     comments.push(comment);
 }
-Comment.collection.insert(comments);
+const commentsPromise = Comment.collection.insert(comments);
+
+Promise.all([usersPromise, itemsPromise, commentsPromise]).then(() => {
+    mongoose.connection.close();
+})
