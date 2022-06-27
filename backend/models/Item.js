@@ -45,6 +45,7 @@ ItemSchema.methods.updateFavoriteCount = function() {
 };
 
 ItemSchema.methods.toJSONFor = function(user) {
+  console.log('seller is', this.seller)
   return {
     slug: this.slug,
     title: this.title,
